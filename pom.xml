@@ -25,6 +25,13 @@
 		</dependency>
 	</dependencies>
 
+	<scm>
+		<connection>scm:git:git://github.com/fiji/Skeletonize3D</connection>
+		<developerConnection>scm:git:git@github.com:fiji/Skeletonize3D</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/fiji/Skeletonize3D</url>
+	</scm>
+
 	<repositories>
 		<!-- NB: for project parent, in case of partial checkout -->
 		<repository>
