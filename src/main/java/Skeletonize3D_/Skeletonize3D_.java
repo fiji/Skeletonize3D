@@ -19,13 +19,13 @@ package Skeletonize3D_;
  * 
  */
 
-import java.util.ArrayList;
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.plugin.filter.PlugInFilter;
 import ij.process.ImageProcessor;
+
+import java.util.ArrayList;
 
 /**
  * Main class.
