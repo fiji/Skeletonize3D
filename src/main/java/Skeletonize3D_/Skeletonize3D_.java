@@ -43,7 +43,7 @@ import java.util.ArrayList;
  *  http://imagejdocu.tudor.lu/doku.php?id=plugin:morphology:skeletonize3d:start
  *
  * @version 1.0 11/19/2008
- * @author Ignacio Arganda-Carreras <ignacio.arganda@uam.es>
+ * @author Ignacio Arganda-Carreras (iargandacarreras at gmail.com)
  *
  */
 public class Skeletonize3D_ implements PlugInFilter 
