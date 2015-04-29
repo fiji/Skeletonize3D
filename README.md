@@ -1,3 +1,5 @@
+![](http://jenkins.imagej.net/job/Skeletonize3D/lastBuild/badge/icon)
+
 Skeletonize3D
 =============
 
