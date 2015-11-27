@@ -1,4 +1,4 @@
-package Skeletonize3D_;
+package sc.fiji.skeletonize3D;
 
 /**
  * Skeletonize3D plugin for ImageJ(C).
@@ -1471,4 +1471,4 @@ public class Skeletonize3D_ implements PlugInFilter
 	} /* end showAbout */
 	/* -----------------------------------------------------------------------*/
 
-} /* end Skeletonize3D_ */
+} /* end skeletonize3D */
