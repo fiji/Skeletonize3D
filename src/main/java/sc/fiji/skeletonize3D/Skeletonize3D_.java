@@ -274,13 +274,13 @@ public class Skeletonize3D_ implements PlugInFilter
 	
 	
 	/**
-	 * Check if point is the end of an arc
+	 * Check if a point in the given stack is at the end of an arc
 	 * 
-	 * @param image
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @return
+	 * @param image	The stack of a 3D binary image
+	 * @param x		The x-coordinate of the point
+	 * @param y		The y-coordinate of the point
+	 * @param z		The z-coordinate of the point (>= 1)
+	 * @return		true if the point has exactly one neighbor
 	 */
 	boolean isEndPoint(ImageStack image, int x, int y, int z)
 	{
