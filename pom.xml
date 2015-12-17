@@ -23,17 +23,54 @@
 			<id>iarganda</id>
 			<name>Ignacio Arganda-Carreras</name>
 			<email>ignacio.arganda@gmail.com</email>
-			<url>http://biocomp.cnb.csic.es/~iarganda/index_EN.html</url>
-			<organization>INRA</organization>
-			<organizationUrl>http://www-ijpb.versailles.inra.fr/en/bc/equipes/modelisation-imagerie/</organizationUrl>
+			<url>https://sites.google.com/site/iargandacarreras/</url>
 			<roles>
-				<role>architect</role>
+				<role>founder</role>
+				<role>lead</role>
 				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+		<developer>
+			<id>ctrueden</id>
+			<name>Curtis Rueden</name>
+			<email>ctrueden@wisc.edu</email>
+			<url>http://loci.wisc.edu/people/curtis-rueden</url>
+			<organization>UW-Madison LOCI</organization>
+			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<roles>
+				<role>maintainer</role>
+			</roles>
+			<timezone>-6</timezone>
+		</developer>
+		<developer>
+			<id>hinerm</id>
+			<name>Mark Hiner</name>
+			<email>hiner@wisc.edu</email>
+			<url>http://loci.wisc.edu/people/mark-hiner</url>
+			<organization>UW-Madison LOCI</organization>
+			<organizationUrl>http://loci.wisc.edu/</organizationUrl>
+			<roles>
 				<role>maintainer</role>
 			</roles>
 			<timezone>-6</timezone>
 		</developer>
 	</developers>
+	<contributors>
+		<contributor>
+			<name>Johannes Schindelin</name>
+			<url>http://imagej.net/User:Schindelin</url>
+			<properties><id>dscho</id></properties>
+		</contributor>
+		<contributor>
+			<name>Daniel Hornung</name>
+			<url>http://imagej.net/User:Hornung</url>
+		</contributor>
+	</contributors>
 
 	<scm>
 		<connection>scm:git:git://github.com/fiji/Skeletonize3D</connection>
