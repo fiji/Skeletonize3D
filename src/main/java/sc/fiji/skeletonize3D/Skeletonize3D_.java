@@ -59,6 +59,8 @@ public class Skeletonize3D_ implements PlugInFilter
 	private int depth = 0;
 	/** working image stack*/
 	private ImageStack inputImage = null;
+    /** number of iterations thinning took */
+	private int iterations;
 	
 	/* -----------------------------------------------------------------------*/
 	/**
@@ -130,8 +132,6 @@ public class Skeletonize3D_ implements PlugInFilter
 		IJ.showStatus("Prepare Data End.");
 	} /* end prepareData */
 	
-	
-	
 	/* -----------------------------------------------------------------------*/
 	/**
 	 * Post processing for computing thinning.
@@ -154,15 +154,16 @@ public class Skeletonize3D_ implements PlugInFilter
 		// deleting each type of border points (R)
 		ArrayList <int[]> simpleBorderPoints = new ArrayList<int[]>();				
 		
-		int iter = 1;
+		iterations = 0;
 		// Loop through the image several times until there is no change.
 		int unchangedBorders = 0;
 		while( unchangedBorders < 6 )  // loop until no change for all the six border types
 		{						
 			unchangedBorders = 0;
+			iterations++;
 			for( int currentBorder = 1; currentBorder <= 6; currentBorder++)
 			{
-				IJ.showStatus("Thinning iteration " + iter + " (" + currentBorder +"/6 borders) ...");
+				IJ.showStatus("Thinning iteration " + iterations + " (" + currentBorder +"/6 borders) ...");
 
 				boolean noChange = true;				
 				
@@ -264,9 +265,6 @@ public class Skeletonize3D_ implements PlugInFilter
 
 				simpleBorderPoints.clear();
 			} // end currentBorder for loop
-
-			// Progress bar iterations
-			iter++;
 		}
 
 		IJ.showStatus("Computed thin image.");
@@ -1290,5 +1288,13 @@ public class Skeletonize3D_ implements PlugInFilter
 						"This plug-in filter produces 3D thinning (skeletonization) of binary 3D images.\n");
 	} /* end showAbout */
 	/* -----------------------------------------------------------------------*/
+
+	/**
+	 * @return 	Number of iterations the thinning algorithm completed on the last run
+	 *       	If 0 is returned, then the plugin hasn't been run yet
+	 */
+	public int getThinningIterations() {
+		return iterations;
+	}
 
 } /* end skeletonize3D */
