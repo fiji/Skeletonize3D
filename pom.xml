@@ -93,8 +93,8 @@
 		<url>https://github.com/fiji/Skeletonize3D/issues</url>
 	</issueManagement>
 	<ciManagement>
-		<system>Jenkins</system>
-		<url>http://jenkins.imagej.net/job/Skeletonize3D/</url>
+		<system>Travis CI</system>
+		<url>https://travis-ci.org/fiji/Skeletonize3D</url>
 	</ciManagement>
 
 	<properties>

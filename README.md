@@ -1,4 +1,4 @@
-[![](http://jenkins.imagej.net/job/Skeletonize3D/lastBuild/badge/icon)](http://jenkins.imagej.net/job/Skeletonize3D/)
+[![](https://travis-ci.org/fiji/Skeletonize3D.svg?branch=master)](https://travis-ci.org/fiji/Skeletonize3D)
 
 Skeletonize3D
 =============
