@@ -11,7 +11,7 @@
 
 	<groupId>sc.fiji</groupId>
 	<artifactId>Skeletonize3D_</artifactId>
-	<version>2.1.1-SNAPSHOT</version>
+	<version>2.1.1</version>
 
 	<name>Skeletonize3D</name>
 	<description>Skeletonize3D plugin for Fiji.</description>
@@ -85,7 +85,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/fiji/Skeletonize3D</connection>
 		<developerConnection>scm:git:git@github.com:fiji/Skeletonize3D</developerConnection>
-		<tag>HEAD</tag>
+		<tag>Skeletonize3D_-2.1.1</tag>
 		<url>https://github.com/fiji/Skeletonize3D</url>
 	</scm>
 	<issueManagement>
