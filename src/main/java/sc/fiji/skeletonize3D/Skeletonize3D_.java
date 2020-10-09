@@ -48,6 +48,9 @@ import java.util.ArrayList;
  */
 public class Skeletonize3D_ implements PlugInFilter 
 {
+
+	public boolean surfaceMode = false;
+	
 	/** working image plus */
 	private ImagePlus imRef;
 
@@ -77,6 +80,9 @@ public class Skeletonize3D_ implements PlugInFilter
 		if (arg.equals("about")) {
 			showAbout();
 			return DONE;
+		}
+		if (arg.equals("surface")) {
+			this.surfaceMode = true;
 		}
 
 		return DOES_8G;
@@ -152,7 +158,7 @@ public class Skeletonize3D_ implements PlugInFilter
 		
 		// Following Lee[94], save versions (Q) of input image S, while 
 		// deleting each type of border points (R)
-		ArrayList <int[]> simpleBorderPoints = new ArrayList<int[]>();				
+		ArrayList <int[]> deletableBorderPoints = new ArrayList<int[]>();				
 		
 		iterations = 0;
 		// Loop through the image several times until there is no change.
@@ -204,12 +210,12 @@ public class Skeletonize3D_ implements PlugInFilter
 								if( currentBorder == 6 && B(outputImage, x, y, z) <= 0 )
 									isBorderPoint = true;
 							}
-							if( !isBorderPoint )
+							if(!isBorderPoint )
 							{
 								continue;         // current point is not deletable
 							}
 
-							if( isEndPoint( outputImage, x, y, z))
+							if(!surfaceMode && isEndPoint( outputImage, x, y, z))
 							{
 								continue;
 							}
@@ -224,19 +230,24 @@ public class Skeletonize3D_ implements PlugInFilter
 
 							// Check if point is simple (deletion does not change connectivity in the 3x3x3 neighborhood)
 							// (conditions 2 and 3 in Lee[94])
-							if( !isSimplePoint( neighborhood ) )
+							if(!surfaceMode && !isSimplePoint( neighborhood ) )
+							{
+								continue;         // current point is not deletable
+							}
+							
+							if(surfaceMode && isSurfacePoint( neighborhood, pointsLUT ) )
 							{
 								continue;         // current point is not deletable
 							}
 
 
 
-							// add all simple border points to a list for sequential re-checking
+							// add all simple or surface border points to a list for sequential re-checking
 							int[] index = new int[3];
 							index[0] = x;
 							index[1] = y;
 							index[2] = z;
-							simpleBorderPoints.add(index);
+							deletableBorderPoints.add(index);
 						}
 					}					
 					IJ.showProgress(z, this.depth);				
@@ -246,24 +257,37 @@ public class Skeletonize3D_ implements PlugInFilter
 				// sequential re-checking to preserve connectivity when
 				// deleting in a parallel way
 				int[] index;
+				
+				if (surfaceMode) {
+					for (int[] deletableBorderPoint : deletableBorderPoints) {
+						index = deletableBorderPoint;
 
-				for (int[] simpleBorderPoint : simpleBorderPoints) {
-					index = simpleBorderPoint;
-
-					// Check if border points is simple			        
-					if (isSimplePoint(getNeighborhood(outputImage, index[0], index[1], index[2]))) {
-						// we can delete the current point
-						setPixel(outputImage, index[0], index[1], index[2], (byte) 0);
-						noChange = false;
+						// Check that border point is not a surface point and is Euler invariant	
+						final byte[] neighborhood = getNeighborhood(outputImage, index[0], index[1], index[2]);
+						if (!isSurfacePoint(neighborhood,pointsLUT) && isEulerInvariant( neighborhood, eulerLUT )) {
+							// we can delete the current point
+							setPixel(outputImage, index[0], index[1], index[2], (byte) 0);
+							noChange = false;
+						}
 					}
+				} else {
+					for (int[] deletableBorderPoint : deletableBorderPoints) {
+						index = deletableBorderPoint;
 
-
+						// Check if border point is simple and Euler invariant	
+						final byte[] neighborhood = getNeighborhood(outputImage, index[0], index[1], index[2]);
+						if (isSimplePoint(neighborhood) && isEulerInvariant( neighborhood, eulerLUT ) ) {
+							// we can delete the current point
+							setPixel(outputImage, index[0], index[1], index[2], (byte) 0);
+							noChange = false;
+						}
+					}
 				}
 
 				if( noChange )
 					unchangedBorders++;
 
-				simpleBorderPoints.clear();
+				deletableBorderPoints.clear();
 			} // end currentBorder for loop
 		}
 
@@ -686,6 +710,60 @@ public class Skeletonize3D_ implements PlugInFilter
 
 		return eulerChar == 0;
 		}
+	
+	/**
+	 * Check if a point is a surface (or surface edge) point
+	 * based on modified version of Definition 1 in Lee (corrected reversed bit order relative to this code and Euler table, added 2 missing symmetries)
+	 * 
+	 * @param neighbors neighbor pixels of the point
+	 * @param LUT look up table giving number of filled points in the octant (including the centre point)
+	 * @return true or false if the point is a surface point or not
+	 */
+	
+	
+	
+	boolean isSurfacePoint(byte[] neighbors, int [] LUT)
+	{
+		char n;
+		// Octant SWU
+		n = indexOctantSWU(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+		
+		// Octant SEU
+		n = indexOctantSEU(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+		
+		// Octant NWU
+		n = indexOctantNWU(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+		
+		// Octant NEU
+		n = indexOctantNEU(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+		
+		// Octant SWB
+		n = indexOctantSWB(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+		
+		// Octant SEB
+		n = indextOctantSEB(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+		
+		// Octant NWB
+		n = indexOctantNWB(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+		
+		// Octant NEB
+		n = indexOctantNEB(neighbors);
+		if (octantInconsistantWithSurfacePoint(n,LUT)) return(false);
+
+		return true;
+		}
+	
+	boolean octantInconsistantWithSurfacePoint(char n, int [] LUT) {
+		return n!=15 && n!=51 && n!=85 && n!=153 && n!=165 && n!=195 && LUT[n]>3;
+		// return n!=15 && n!=51 && n!=85 && n!=165 && LUT[n]>3; // using only the 4 codes given by Def 1 (with bit order reversal)
+	}
 
 	public char indexOctantNEB(byte[] neighbors) {
 		char n;
