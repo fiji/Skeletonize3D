@@ -1,4 +1,4 @@
-[![](https://travis-ci.org/fiji/Skeletonize3D.svg?branch=master)](https://travis-ci.org/fiji/Skeletonize3D)
+[![](https://github.com/fiji/Skeletonize3D/actions/workflows/build-main.yml/badge.svg)](https://github.com/fiji/Skeletonize3D/actions/workflows/build-main.yml)
 
 Skeletonize3D
 =============
