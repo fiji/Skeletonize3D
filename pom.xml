@@ -83,7 +83,7 @@
 	</mailingLists>
 
 	<scm>
-		<connection>scm:git:git://github.com/fiji/Skeletonize3D</connection>
+		<connection>scm:git:https://github.com/fiji/Skeletonize3D</connection>
 		<developerConnection>scm:git:git@github.com:fiji/Skeletonize3D</developerConnection>
 		<tag>HEAD</tag>
 		<url>https://github.com/fiji/Skeletonize3D</url>
